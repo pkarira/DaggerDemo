@@ -13,12 +13,13 @@ public class PresentorImplementor implements Presentor, ModelInterface.ModelPres
     private String mName;
     private String mPassword;
     private ViewInterface viewInterface;
-    @Inject
+//    @Inject
     ModelInterface modelInterface;
 
     PresentorImplementor(ViewInterface view) {
         viewInterface = view;
-        DaggerPresentorComponent.builder().presentorModule(new PresentorModule(this)).build().inject(this);
+        modelInterface=new ModelImplementor(this);
+//        DaggerPresentorComponent.builder().presentorModule(new PresentorModule(this)).build().inject(this);
     }
 
     @Override
