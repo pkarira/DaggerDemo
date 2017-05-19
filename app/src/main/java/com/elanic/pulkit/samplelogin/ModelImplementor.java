@@ -1,22 +1,20 @@
 package com.elanic.pulkit.samplelogin;
 
+import rx.Observable;
+
 /**
  * Created by pulkit on 15/5/17.
  */
 
 public class ModelImplementor implements ModelInterface {
-    private ModelPresentorInterface mModelPresentorInterface;
-
-    ModelImplementor(ModelPresentorInterface modelPresentorInterface) {
-        mModelPresentorInterface = modelPresentorInterface;
-    }
 
     @Override
-    public void checkNameAndPassword(String name, String passsword) {
+    public Observable<String> checkNameAndPassword(String name, String passsword) {
         if(name.equals(passsword))
         {
-            mModelPresentorInterface.verifiedResult("Correct");
+             return Observable.just("Correct");
         }else
-            mModelPresentorInterface.verifiedResult("Incorrect");
+            return Observable.just("Incorrect");
+
     }
 }

@@ -8,14 +8,8 @@ import dagger.Provides;
  */
 @Module
 public class PresentorModule {
-    ModelInterface.ModelPresentorInterface mPresentor;
-
-    PresentorModule(ModelInterface.ModelPresentorInterface presentor) {
-        mPresentor = presentor;
-    }
-
     @Provides
     public ModelInterface createModelObject() {
-        return new ModelImplementor(mPresentor);
+        return new ModelImplementor();
     }
 }

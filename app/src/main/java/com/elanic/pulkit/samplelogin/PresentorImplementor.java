@@ -4,22 +4,22 @@ import android.util.Log;
 
 import javax.inject.Inject;
 
+import rx.functions.Action1;
+
 /**
  * Created by pulkit on 15/5/17.
  */
 
-public class PresentorImplementor implements Presentor, ModelInterface.ModelPresentorInterface {
+public class PresentorImplementor implements Presentor {
 
     private String mName;
     private String mPassword;
     private ViewInterface viewInterface;
-//    @Inject
     ModelInterface modelInterface;
 
-    PresentorImplementor(ViewInterface view) {
+    PresentorImplementor(ViewInterface view,ModelInterface model) {
         viewInterface = view;
-        modelInterface=new ModelImplementor(this);
-//        DaggerPresentorComponent.builder().presentorModule(new PresentorModule(this)).build().inject(this);
+        modelInterface=model;
     }
 
     @Override
@@ -31,14 +31,14 @@ public class PresentorImplementor implements Presentor, ModelInterface.ModelPres
         } else if (mPassword.equals("")) {
             viewInterface.passwordError("Please Enter Password");
         } else
-            modelInterface.checkNameAndPassword(mName, mPassword);
-    }
-
-    @Override
-    public void verifiedResult(String result) {
-        if (result.equals("Correct"))
-            viewInterface.verified();
-        else
-            viewInterface.setError(result);
+            modelInterface.checkNameAndPassword(mName, mPassword).subscribe(new Action1<String>() {
+                @Override
+                public void call(String s) {
+                    if(s.equals("correct"))
+                    viewInterface.verified();
+                    else
+                        viewInterface.setError(s);
+                }
+            });
     }
 }

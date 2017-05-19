@@ -15,7 +15,12 @@ public class LoginModule {
     }
 
     @Provides
-    public Presentor createPresentor() {
-        return new PresentorImplementor(mViewInterface);
+    public Presentor createPresentor(ModelInterface m) {
+        return new PresentorImplementor(mViewInterface, m);
+    }
+
+    @Provides
+    public ModelInterface createModelObject() {
+        return new ModelImplementor();
     }
 }
